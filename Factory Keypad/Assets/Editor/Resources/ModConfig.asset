@@ -21,6 +21,6 @@ MonoBehaviour:
     can be found at ktane.timwi.de or in the bundled manuals folder.\nSource code
     is at https://github.com/Infusion478/KTANE-Factory-Keypad\n\nComes with Twitch
     Plays support."
-  version: 1.0.1
+  version: 1.1
   outputFolder: build
   previewImage: {fileID: 2800000, guid: f9cef2168b8ff134097cd246610c0f57, type: 3}

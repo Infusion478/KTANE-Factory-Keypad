@@ -20,10 +20,12 @@ public class FactoryKeypad : MonoBehaviour {
    int ModuleId;
    private bool ModuleSolved;
    private bool ModuleStriking;
+   private bool ModuleActivated;
    private int code;
    private int activationYear = DateTime.Now.Year;
    private int strikes;
    private bool TwitchInput;
+   private bool Exploded;
 
    void Awake () {
       ModuleId = ModuleIdCounter++;
@@ -31,10 +33,11 @@ public class FactoryKeypad : MonoBehaviour {
       foreach (KMSelectable Key in Keys) {
          Key.OnInteract += delegate () { KeyPress(Key); return false; };
       }
+      Bomb.OnBombExploded += delegate () { Exploded = true; };
    }
 
    void KeyPress (KMSelectable Key) {
-      if (ModuleSolved || ModuleStriking) {
+      if (ModuleSolved || ModuleStriking || !ModuleActivated) {
          return;
       }
       for (int i = 0; i < 12; i++) {
@@ -63,6 +66,7 @@ public class FactoryKeypad : MonoBehaviour {
 
    void Activate () {
       DisplayText.text = "";
+      ModuleActivated = true;
    }
 
    void Start () {
@@ -237,10 +241,8 @@ public class FactoryKeypad : MonoBehaviour {
          Strike();
       } else {
          Debug.LogFormat("[Factory Keypad #{0}] Submitted {1}, which is incorrect. No attempts left. Detonating bomb.", ModuleId, DisplayText.text);
-         if (!TwitchInput) {
-            for (int i = 0; i < 1000; i++) {
-               GetComponent<KMBombModule>().HandleStrike();
-            }
+         while (!Exploded && !TwitchInput) {
+            GetComponent<KMBombModule>().HandleStrike();
          }
       }
    }
