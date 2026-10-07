@@ -204,8 +204,7 @@ public class FactoryKeypad : MonoBehaviour {
             break;
       }
       if (Bomb.GetSerialNumberLetters().Contains('A') && Bomb.GetSerialNumberNumbers().Contains(9)) {
-         code *= 10;
-         code %= 10000;
+         code += 219;
          Debug.LogFormat("[Factory Keypad #{0}] Please report to Room A9. The code is now {1}{2}{3}{4}.", ModuleId, code < 1000?"0":"", code < 100?"0":"", code < 10?"0":"", code);
       }
       if (code < 1000) {
