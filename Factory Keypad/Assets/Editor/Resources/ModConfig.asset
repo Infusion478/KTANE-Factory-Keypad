@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615501dbe4f3fe94fbf4b564abb10237, type: 3}
+  m_Name: ModConfig
+  m_EditorClassIdentifier: 
+  id: factoryKeypad
+  title: Factory Keypad
+  author: Infusion
+  description: "Did this somehow end up from one of the doors in the factory to one
+    of its explosive creations?\r\n\nEnter the correct code to unlock the module given
+    by edgework. Denied access may have consequences.\n\nI tried making a module that
+    wasn't based on another module in some way, and this is what I came up with.\n\nManual
+    can be found at ktane.timwi.de or in the bundled manuals folder.\nSource code
+    is at https://github.com/Infusion478/KTANE-Factory-Keypad\n\nComes with Twitch
+    Plays support."
+  version: 1.0
+  outputFolder: build
+  previewImage: {fileID: 2800000, guid: f9cef2168b8ff134097cd246610c0f57, type: 3}

@@ -1,0 +1,10 @@
+{
+  "name": "factoryKeypad-Editor",
+  "references": [
+    "factoryKeypad"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": []
+}
