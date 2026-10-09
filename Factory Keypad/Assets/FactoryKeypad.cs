@@ -235,15 +235,20 @@ public class FactoryKeypad : MonoBehaviour {
    }
 
    void Incorrect () {
-      strikes++;
-      if (strikes < 3) {
-         Debug.LogFormat("[Factory Keypad #{0}] Submitted {1}, which is incorrect. {2} attempt{3} left.", ModuleId, DisplayText.text, 3 - strikes, strikes == 2?"":"s");
-         Strike();
-      } else {
-         Debug.LogFormat("[Factory Keypad #{0}] Submitted {1}, which is incorrect. No attempts left. Detonating bomb.", ModuleId, DisplayText.text);
-         while (!Exploded && !TwitchInput) {
-            GetComponent<KMBombModule>().HandleStrike();
+      if (!TwitchInput) {
+         strikes++;
+         if (strikes < 3) {
+            Debug.LogFormat("[Factory Keypad #{0}] Submitted {1}, which is incorrect. {2} attempt{3} left.", ModuleId, DisplayText.text, 3 - strikes, strikes == 2?"":"s");
+            Strike();
+         } else {
+            Debug.LogFormat("[Factory Keypad #{0}] Submitted {1}, which is incorrect. No attempts left. Detonating bomb.", ModuleId, DisplayText.text);
+            while (!Exploded) {
+               GetComponent<KMBombModule>().HandleStrike();
+            }
          }
+      } else {
+         Debug.LogFormat("[Factory Keypad #{0}] Submitted {1}, which is incorrect. ∞ attempts left.", ModuleId, DisplayText.text);
+         Strike();
       }
    }
 
@@ -316,19 +321,16 @@ public class FactoryKeypad : MonoBehaviour {
       if (Command == "clear") {
          Keys[10].OnInteract();
       } else if (Command == "submit") {
-         TwitchInput = true;
-         if (int.Parse(DisplayText.text) == code) {
+         if (TwitchInput == false) {
+            TwitchInput = true;
+            Debug.LogFormat("[Factory Keypad #{0}] Twitch Plays is active, so the module cannot detonate.", ModuleId);
+         }
+         if (DisplayText.text != "0000") {
             Keys[11].OnInteract();
-         } else if (DisplayText.text == "0000") {
+         } else {
             yield return "antitroll Sorry, but the remote input service has not allowed you to submit the reset code.";
             yield return null;
             Keys[11].OnInteract();
-         } else {
-            if (strikes < 2) {
-               Keys[11].OnInteract();
-            } else {
-               yield return "detonate";
-            }
          }
       } else if (Regex.IsMatch(Command, @"^\s*(enter)\s+\d{4}\s*$")) {
          string[] Commands = Command.Split(' ');
